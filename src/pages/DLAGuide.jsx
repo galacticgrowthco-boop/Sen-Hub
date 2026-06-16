@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Info, FileText, CheckCircle2, AlertTriangle, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const DLATips = () => {
+const DLAGuide = () => {
   const navigate = useNavigate();
 
   const sections = [
@@ -97,4 +97,4 @@ const DLATips = () => {
   );
 };
 
-export default DLATips;
+export default DLAGuide;

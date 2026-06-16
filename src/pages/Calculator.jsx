@@ -19,9 +19,13 @@ const allQuestions = [
     question: "Which of these benefits do you already receive?",
     type: 'multi-choice',
     options: [
-      { value: 'universal_credit', label: 'Universal Credit' },
-      { value: 'child_benefit', label: 'Child Benefit' },
+      { value: 'dla_child', label: 'DLA for my child/children' },
+      { value: 'claimant_pip', label: 'PIP for myself' },
       { value: 'carers_allowance', label: "Carer's Allowance" },
+      { value: 'uc_disabled_child', label: 'UC — Disabled Child Addition' },
+      { value: 'uc_carer_element', label: 'UC — Carer Element' },
+      { value: 'uc_health_element', label: 'UC — LCW or LCWRA Element' },
+      { value: 'child_benefit', label: 'Child Benefit' },
       { value: 'none', label: 'None of these' }
     ],
     description: "Select all that apply."
@@ -95,15 +99,16 @@ const allQuestions = [
       { value: 'no', label: 'No' },
       { value: 'in_process', label: 'In process' }
     ],
-    description: "An EHCP secures legal rights to educational support."
+    description: "An EHCP is a legal document that secures rights to specialist support, therapies, and potentially transport."
   },
   {
     id: 'child_1_existing_dla',
-    question: "Do you already receive DLA or PIP for your first child?",
+    question: "Does your first child already receive DLA or PIP?",
     type: 'choice',
     options: [
       { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' }
+      { value: 'no', label: 'No' },
+      { value: 'not_yet', label: 'Not yet / Applied' }
     ]
   },
   // Child 2
@@ -147,11 +152,12 @@ const allQuestions = [
   },
   {
     id: 'child_2_existing_dla',
-    question: "Do you already receive DLA or PIP for your second child?",
+    question: "Does your second child already receive DLA or PIP?",
     type: 'choice',
     options: [
       { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' }
+      { value: 'no', label: 'No' },
+      { value: 'not_yet', label: 'Not yet / Applied' }
     ]
   },
   // Child 3
@@ -195,11 +201,12 @@ const allQuestions = [
   },
   {
     id: 'child_3_existing_dla',
-    question: "Do you already receive DLA or PIP for your third child?",
+    question: "Does your third child already receive DLA or PIP?",
     type: 'choice',
     options: [
       { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' }
+      { value: 'no', label: 'No' },
+      { value: 'not_yet', label: 'Not yet / Applied' }
     ]
   },
   {

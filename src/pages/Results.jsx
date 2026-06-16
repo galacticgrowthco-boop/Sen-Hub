@@ -1,6 +1,6 @@
 import { useLocation, Link } from 'react-router-dom';
 import { useState, useRef } from 'react';
-import { CheckCircle2, AlertCircle, RefreshCcw, Download, ExternalLink, TrendingUp, Coffee, Bell, ShieldCheck } from 'lucide-react';
+import { CheckCircle2, AlertCircle, RefreshCcw, Download, ExternalLink, TrendingUp, Coffee, Bell, ShieldCheck, Gift, Info } from 'lucide-react';
 import { calculateEntitlements } from '../utils/matchingEngine';
 
 const Results = () => {
@@ -197,7 +197,7 @@ const Results = () => {
               <h4 className="font-bold text-slate-900">Useful Resources</h4>
               <div className="grid gap-3">
                 <Link 
-                  to="/dla-tips"
+                  to="/dla-guide"
                   className="flex items-center justify-between p-4 bg-indigo-50 rounded-2xl text-indigo-700 hover:bg-indigo-100 transition-colors"
                 >
                   <div className="flex items-center gap-3">
@@ -306,12 +306,17 @@ const ResultCard = ({ result }) => (
       </span>
     </div>
     <p className="text-slate-600 leading-relaxed">{result.description}</p>
-    {result.details && (
-      <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-1">
-        {result.details.map((detail, index) => (
-          <p key={index} className="text-sm text-slate-500 flex justify-between">
-            {detail}
-          </p>
+    {result.detailedBreakdown && (
+      <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 space-y-3">
+        <div className="flex items-center gap-2 text-slate-900 font-bold text-sm uppercase tracking-wider mb-2">
+          <Info className="w-4 h-4 text-indigo-600" />
+          Calculation Breakdown
+        </div>
+        {result.detailedBreakdown.map((detail, index) => (
+          <div key={index} className={`flex justify-between text-sm ${detail.isTotal ? 'pt-2 border-t border-slate-200 font-bold text-slate-900' : detail.isInfo ? 'text-indigo-600 italic' : 'text-slate-500'}`}>
+            <span>{detail.label}</span>
+            <span className="font-mono">{detail.value < 0 ? '-' : ''}£{Math.abs(detail.value).toFixed(2)}</span>
+          </div>
         ))}
       </div>
     )}

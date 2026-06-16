@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Calculator from './pages/Calculator';
 import Results from './pages/Results';
-import DLATips from './pages/DLATips';
+import DLAGuide from './pages/DLAGuide';
 import GrantsDirectory from './pages/GrantsDirectory';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/results" element={<Results />} />
-            <Route path="/dla-tips" element={<DLATips />} />
+            <Route path="/dla-guide" element={<DLAGuide />} />
             <Route path="/grants" element={<GrantsDirectory />} />
           </Routes>
         </main>
