@@ -15,6 +15,18 @@ const allQuestions = [
     description: "This helps us calculate your 'better-off in work' estimate."
   },
   {
+    id: 'existing_benefits',
+    question: "Which of these benefits do you already receive?",
+    type: 'multi-choice',
+    options: [
+      { value: 'universal_credit', label: 'Universal Credit' },
+      { value: 'child_benefit', label: 'Child Benefit' },
+      { value: 'carers_allowance', label: "Carer's Allowance" },
+      { value: 'none', label: 'None of these' }
+    ],
+    description: "Select all that apply."
+  },
+  {
     id: 'num_children',
     question: "How many children do you have living with you?",
     type: 'number',
@@ -74,6 +86,26 @@ const allQuestions = [
     ],
     description: "A formal diagnosis or being in the process can support benefit applications."
   },
+  {
+    id: 'child_1_ehcp',
+    question: "Does your first child have an EHCP (Education, Health and Care Plan)?",
+    type: 'choice',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+      { value: 'in_process', label: 'In process' }
+    ],
+    description: "An EHCP secures legal rights to educational support."
+  },
+  {
+    id: 'child_1_existing_dla',
+    question: "Do you already receive DLA or PIP for your first child?",
+    type: 'choice',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' }
+    ]
+  },
   // Child 2
   {
     id: 'child_2_age',
@@ -103,6 +135,25 @@ const allQuestions = [
       { value: 'in_process', label: 'In process' }
     ]
   },
+  {
+    id: 'child_2_ehcp',
+    question: "Does your second child have an EHCP?",
+    type: 'choice',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+      { value: 'in_process', label: 'In process' }
+    ]
+  },
+  {
+    id: 'child_2_existing_dla',
+    question: "Do you already receive DLA or PIP for your second child?",
+    type: 'choice',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' }
+    ]
+  },
   // Child 3
   {
     id: 'child_3_age',
@@ -130,6 +181,25 @@ const allQuestions = [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
       { value: 'in_process', label: 'In process' }
+    ]
+  },
+  {
+    id: 'child_3_ehcp',
+    question: "Does your third child have an EHCP?",
+    type: 'choice',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+      { value: 'in_process', label: 'In process' }
+    ]
+  },
+  {
+    id: 'child_3_existing_dla',
+    question: "Do you already receive DLA or PIP for your third child?",
+    type: 'choice',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' }
     ]
   },
   {
@@ -390,8 +460,6 @@ const Calculator = () => {
                     key={option.value}
                     onClick={() => {
                       handleAnswer(option.value);
-                      // Auto-advance for choices if not at the end
-                      // (Optional, but makes it faster)
                     }}
                     className={`p-4 rounded-2xl border-2 text-left transition-all flex items-center justify-between ${
                       answers[currentQuestion.id] === option.value
@@ -405,6 +473,44 @@ const Calculator = () => {
                     )}
                   </button>
                 ))}
+              </div>
+            )}
+
+            {currentQuestion.type === 'multi-choice' && (
+              <div className="grid gap-4">
+                {currentQuestion.options.map((option) => {
+                  const currentAnswers = answers[currentQuestion.id] || [];
+                  const isSelected = currentAnswers.includes(option.value);
+                  
+                  return (
+                    <button
+                      key={option.value}
+                      onClick={() => {
+                        let newAnswers;
+                        if (option.value === 'none') {
+                          newAnswers = isSelected ? [] : ['none'];
+                        } else {
+                          newAnswers = isSelected 
+                            ? currentAnswers.filter(v => v !== option.value)
+                            : [...currentAnswers.filter(v => v !== 'none'), option.value];
+                        }
+                        handleAnswer(newAnswers);
+                      }}
+                      className={`p-4 rounded-2xl border-2 text-left transition-all flex items-center justify-between ${
+                        isSelected
+                          ? 'border-indigo-600 bg-indigo-50 text-indigo-700 ring-4 ring-indigo-50'
+                          : 'border-slate-100 hover:border-slate-200 text-slate-700'
+                      }`}
+                    >
+                      <span className="font-medium">{option.label}</span>
+                      <div className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${
+                        isSelected ? 'bg-indigo-600 border-indigo-600' : 'border-slate-200'
+                      }`}>
+                        {isSelected && <CheckCircle2 className="w-4 h-4 text-white" />}
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>

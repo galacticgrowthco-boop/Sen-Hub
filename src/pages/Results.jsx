@@ -11,9 +11,10 @@ const Results = () => {
 
   const { entitlements, comparison } = calculateEntitlements(answers);
   
+  const activeResults = entitlements.filter(r => r.status === 'active');
   const likelyResults = entitlements.filter(r => r.status === 'likely' && r.category !== 'Education Support');
   const educationSupport = entitlements.filter(r => r.category === 'Education Support');
-  const otherResults = entitlements.filter(r => r.status !== 'likely' && r.status !== 'unlikely' && r.category !== 'Education Support');
+  const otherResults = entitlements.filter(r => r.status !== 'likely' && r.status !== 'active' && r.status !== 'unlikely' && r.category !== 'Education Support');
   const unlikelyResults = entitlements.filter(r => r.status === 'unlikely');
 
   const isCurrentlyWorking = answers.is_working === 'yes';
@@ -99,6 +100,20 @@ const Results = () => {
           )}
 
           <div className="space-y-12">
+            {activeResults.length > 0 && (
+              <section className="space-y-6">
+                <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                  Your Current Benefits
+                </h3>
+                <div className="grid gap-6">
+                  {activeResults.map((result) => (
+                    <ResultCard key={result.id} result={result} />
+                  ))}
+                </div>
+              </section>
+            )}
+
             {likelyResults.length > 0 && (
               <section className="space-y-6">
                 <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
@@ -178,6 +193,30 @@ const Results = () => {
               Download Report (£4.99)
             </button>
             
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <h4 className="font-bold text-slate-900">Useful Resources</h4>
+              <div className="grid gap-3">
+                <Link 
+                  to="/dla-tips"
+                  className="flex items-center justify-between p-4 bg-indigo-50 rounded-2xl text-indigo-700 hover:bg-indigo-100 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <AlertCircle className="w-5 h-5" />
+                    <span className="font-bold text-sm">DLA Application Tips</span>
+                  </div>
+                </Link>
+                <Link 
+                  to="/grants"
+                  className="flex items-center justify-between p-4 bg-emerald-50 rounded-2xl text-emerald-700 hover:bg-emerald-100 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <Gift className="w-5 h-5" />
+                    <span className="font-bold text-sm">Charity Grants Directory</span>
+                  </div>
+                </Link>
+              </div>
+            </div>
+
             <div ref={donationRef} className="pt-6 border-t border-slate-100 space-y-4">
               {showPremiumNotice && (
                 <div className="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 text-indigo-700 text-sm font-medium animate-pulse">
@@ -257,6 +296,7 @@ const ResultCard = ({ result }) => (
         )}
       </div>
       <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${
+        result.status === 'active' ? 'bg-emerald-600 text-white' :
         result.status === 'likely' ? 'bg-emerald-50 text-emerald-700' : 
         result.status === 'check' ? 'bg-indigo-50 text-indigo-700' :
         result.status === 'info' ? 'bg-blue-50 text-blue-700' :
