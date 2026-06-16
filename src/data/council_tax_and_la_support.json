@@ -1,0 +1,83 @@
+{
+  "council_tax_support": {
+    "disabled_band_reduction_scheme": {
+      "name": "Disabled Band Reduction Scheme",
+      "description": "Reduces your Council Tax bill by one band if your home has been adapted to meet the needs of a disabled person.",
+      "eligibility_criteria": [
+        "A room (other than a bathroom, kitchen or toilet) which is used mainly by the disabled person",
+        "An additional bathroom or kitchen",
+        "Enough space for the use of a wheelchair"
+      ],
+      "benefit": "Your Council Tax bill is calculated as if your home was in the next lower valuation band."
+    },
+    "severely_mentally_impaired_discount": {
+      "name": "Severely Mentally Impaired (SMI) Discount/Exemption",
+      "description": "Exemption or discount for people who are 'severely mentally impaired'.",
+      "eligibility": "Must be certified by a doctor as having a severe impairment of intelligence and social functioning which appears to be permanent, and be entitled to certain benefits (e.g. DLA middle or high rate care, PIP daily living).",
+      "discounts": {
+        "all_occupants_smi": "100% exemption (no Council Tax is payable)",
+        "one_non_smi_occupant": "25% discount"
+      }
+    },
+    "single_person_discount": {
+      "name": "Single Person Discount",
+      "description": "A discount for households where only one adult lives.",
+      "eligibility": "Only one person aged 18 or over lives in the property.",
+      "benefit": "25% reduction in the Council Tax bill."
+    },
+    "council_tax_reduction": {
+      "name": "Council Tax Reduction (CTR)",
+      "description": "A means-tested benefit to help people on low incomes pay their Council Tax.",
+      "eligibility": "Low income, receiving benefits, or of pension age. Each local council has its own scheme.",
+      "note": "Can reduce the bill by up to 100% depending on the local authority's rules."
+    }
+  },
+  "local_authority_schemes": {
+    "disabled_facilities_grant": {
+      "name": "Disabled Facilities Grant (DFG)",
+      "description": "A grant to help with the cost of home adaptations so a disabled person can continue to live at home.",
+      "maximum_amounts": {
+        "england": 30000,
+        "wales": 36000,
+        "northern_ireland": 25000
+      },
+      "eligible_works": [
+        "Widening doors and installing ramps",
+        "Improving access to rooms and facilities (e.g. stairlifts, level access showers)",
+        "Adapting heating or lighting controls",
+        "Improving safety in the home"
+      ],
+      "means_tested": "Yes (except for children under 18 in England and Wales)."
+    },
+    "blue_badge_scheme": {
+      "name": "Blue Badge Scheme",
+      "description": "Provides parking concessions for people with severe mobility problems or certain other disabilities.",
+      "cost": {
+        "england": "Up to £10",
+        "scotland": "Up to £20",
+        "wales": "Free",
+        "northern_ireland": "£10 (valid for 3 years)"
+      },
+      "eligibility": "Includes those with PIP (8 points or more in 'moving around' or 'planning and following a journey' descriptors), DLA (higher rate mobility), or registered blind."
+    },
+    "disabled_persons_bus_pass": {
+      "name": "Disabled Person's Bus Pass",
+      "description": "Provides free off-peak travel on local buses.",
+      "eligibility": "Based on disability criteria set by the local authority, including those receiving DLA/PIP mobility elements."
+    }
+  },
+  "other_support": {
+    "access_card": {
+      "name": "Access Card (Nimbus Card)",
+      "description": "A card for disabled people that acts as proof of disability and communicates specific needs to venues via simple icons.",
+      "cost": "£15 for 3 years",
+      "benefits": [
+        "Easier application for 'Essential Companion' tickets (often free)",
+        "Proof of need for 'Standing and Queuing' support",
+        "Widely recognised by major UK venues (theatres, festivals, theme parks)",
+        "Eliminates the need to carry sensitive medical documents"
+      ],
+      "website": "https://www.accesscard.online/"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "council_tax": {
+    "council_tax_reduction": {
+      "name": "Council Tax Reduction (CTR) / Council Tax Support",
+      "description": "A means-tested reduction in Council Tax for households on low incomes. Each local authority (LA) runs its own scheme.",
+      "eligibility": "Based on household income, savings, and circumstances (e.g. number of children, disability status).",
+      "benefit": "Can reduce the bill by up to 100%, though some councils require everyone to pay a minimum percentage.",
+      "how_to_apply": "Apply through your local council's website.",
+      "url": "https://www.gov.uk/apply-council-tax-reduction"
+    },
+    "disabled_band_reduction": {
+      "name": "Disabled Band Reduction Scheme",
+      "description": "A statutory scheme that reduces your Council Tax band by one level if your property has been adapted for a disabled person.",
+      "eligibility": "Property must have: an extra bathroom or kitchen for the disabled person, or a room (other than a bathroom, kitchen or toilet) used mainly by them, or enough space for the use of a wheelchair indoors. This applies to children with SEN if the adaptations are for their needs.",
+      "benefit": "Your bill is calculated as if your home were in the next lower valuation band. If you are already in Band A, your bill is reduced by 1/6th.",
+      "how_to_apply": "Contact your local council's Council Tax department.",
+      "url": "https://www.gov.uk/council-tax/discounts-for-disabled-people"
+    },
+    "smi_discount": {
+      "name": "Severely Mentally Impaired (SMI) Discount",
+      "description": "A disregard for people who are certified as 'severely mentally impaired'. This is highly relevant for adult children (18+) with severe SEN living at home.",
+      "eligibility": "Must be certified by a doctor as having a severe impairment of intelligence and social functioning which appears to be permanent. Must also be entitled to certain benefits (e.g. DLA middle/highest care, PIP daily living).",
+      "benefit": "The SMI person is 'disregarded' for Council Tax purposes. If one adult lives with an SMI person, they get a 25% discount. If only SMI people live in the house, it is 100% exempt.",
+      "how_to_apply": "Contact your local council for an SMI application form, which will require a doctor's signature.",
+      "url": "https://www.gov.uk/council-tax/discounts-for-disabled-people"
+    }
+  },
+  "local_authority_support": {
+    "local_welfare_assistance": {
+      "name": "Local Welfare Assistance Schemes (LWAS)",
+      "description": "Emergency financial help provided by local councils for people in crisis.",
+      "eligibility": "Discretionary and varies by council. Usually requires proof of crisis (e.g. no food, fuel emergency).",
+      "benefit": "Varies: food vouchers, fuel credit, essential household items (white goods), or sometimes cash payments.",
+      "how_to_apply": "Search 'Local Welfare Assistance' on your local council's website.",
+      "url": "https://www.gov.uk/find-local-council"
+    }
+  },
+  "social_care_support": {
+    "direct_payments": {
+      "name": "Direct Payments and Personal Budgets",
+      "description": "Cash payments from the Local Authority instead of directly provided services, allowing families more control over their care and support. This is part of the 'Personal Budget' offered to families with eligible needs.",
+      "eligibility": "Available to families who have been assessed as needing social care support (often through an EHCP or Social Care Assessment).",
+      "benefit": "Allows the parent/carer to hire their own PAs, buy specific equipment, or access community activities directly.",
+      "how_to_apply": "Request a social care assessment or discuss during an EHCP review with the Local Authority.",
+      "url": "https://www.gov.uk/apply-direct-payments"
+    }
+  },
+  "discounts_and_cards": {
+    "access_card": {
+      "name": "Access Card (Nimbus Disability Card)",
+      "description": "A card that communicates your specific access needs to venues via simple symbols, acting as a universal proof of disability.",
+      "cost": "£15 for 3 years.",
+      "eligibility": "Requires proof of disability (e.g. DLA/PIP award letter) to map your needs to the card symbols.",
+      "benefit": "Simplifies getting support (e.g. 'Essential Companion' free tickets, queuing support) at thousands of venues, including theme parks, theatres, and festivals.",
+      "how_to_apply": "Apply online at the Access Card website.",
+      "url": "https://www.accesscard.online/"
+    }
+  }
+}

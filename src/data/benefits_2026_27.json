@@ -1,0 +1,150 @@
+{
+  "last_updated": "2026-06-15",
+  "benefits": {
+    "dla_children": {
+      "name": "Disability Living Allowance (DLA) for children",
+      "official_url": "https://www.gov.uk/disability-living-allowance-children/rates",
+      "frequency": "weekly",
+      "rates": {
+        "care": {
+          "lowest": 28.70,
+          "middle": 72.65,
+          "highest": 108.55
+        },
+        "mobility": {
+          "lower": 28.70,
+          "higher": 75.75
+        }
+      },
+      "eligibility": "Child under 16 with extra care needs or mobility difficulties due to a health condition or disability.",
+      "gateway_to": [
+        "Carer's Allowance",
+        "Universal Credit Disabled Child Addition",
+        "Universal Credit Carer Element",
+        "Exemption from Benefit Cap"
+      ]
+    },
+    "pip": {
+      "name": "Personal Independence Payment (PIP)",
+      "official_url": "https://www.gov.uk/pip/how-much-youll-get",
+      "frequency": "weekly",
+      "rates": {
+        "daily_living": {
+          "standard": 72.65,
+          "enhanced": 108.55
+        },
+        "mobility": {
+          "standard": 28.70,
+          "enhanced": 75.75
+        }
+      },
+      "eligibility": "Aged 16 to State Pension age with long-term health condition or disability."
+    },
+    "carers_allowance": {
+      "name": "Carer's Allowance",
+      "official_url": "https://www.gov.uk/carers-allowance",
+      "frequency": "weekly",
+      "rate": 81.90,
+      "eligibility_rules": {
+        "min_care_hours_per_week": 35,
+        "max_earnings_per_week_after_tax_ni_expenses": 204.00,
+        "qualifying_benefits_for_cared_for": [
+          "DLA middle or highest care rate",
+          "PIP daily living component (either rate)",
+          "Attendance Allowance"
+        ]
+      },
+      "cliff_edge_warning": "Earning even 1p over the limit results in total loss of the benefit."
+    },
+    "universal_credit": {
+      "name": "Universal Credit (UC)",
+      "official_url": "https://www.gov.uk/universal-credit/what-youll-get",
+      "frequency": "monthly",
+      "standard_allowance": {
+        "single_under_25": 338.58,
+        "single_25_or_over": 424.90,
+        "couple_both_under_25": 528.34,
+        "couple_one_or_both_25_or_over": 666.97
+      },
+      "child_elements": {
+        "per_child": 303.94,
+        "first_child_born_before_apr_2017_addition": 47.94
+      },
+      "disabled_child_additions": {
+        "lower_rate": 164.79,
+        "higher_rate": 514.71
+      },
+      "carer_element": 209.34,
+      "lcwra_element": 429.80,
+      "lcw_element": 217.26,
+      "housing_element": {
+        "description": "Covers eligible rent up to Local Housing Allowance (LHA) rates or actual rent, whichever is lower.",
+        "note": "Calculated based on actual rent and LHA rate for the area and bedroom entitlement."
+      },
+      "non_dependant_deductions": {
+        "name": "Housing Cost Contribution",
+        "description": "Amount deducted from housing element for other adults (18+) living in the home.",
+        "rates_2026_27": [
+          {
+            "condition": "In work, earnings £0-£163/week",
+            "monthly_deduction": 85.73
+          },
+          {
+            "condition": "In work, earnings £163-£281/week",
+            "monthly_deduction": 98.14
+          },
+          {
+            "condition": "In work, earnings £282-£435/week",
+            "monthly_deduction": 121.23
+          },
+          {
+            "condition": "In work, earnings £436+/week",
+            "monthly_deduction": 143.44
+          },
+          {
+            "condition": "On certain benefits (e.g. UC, JSA, ESA)",
+            "monthly_deduction": 23.95
+          },
+          {
+            "condition": "On PIP daily living / DLA care component",
+            "monthly_deduction": 0.00
+          }
+        ]
+      },
+      "work_allowance": {
+        "with_housing_help": 427.00,
+        "without_housing_help": 710.00
+      },
+      "taper_rate": 0.55,
+      "childcare_costs_rebate": 0.85,
+      "childcare_max_monthly": {
+        "one_child": 1071.09,
+        "two_or_more_children": 1836.16
+      }
+    },
+    "child_benefit": {
+      "name": "Child Benefit",
+      "official_url": "https://www.gov.uk/child-benefit/what-you-get",
+      "frequency": "weekly",
+      "rates": {
+        "eldest_or_only_child": 25.60,
+        "additional_children": 16.95
+      },
+      "eligibility": "Anyone responsible for a child under 16 (or under 20 in approved education/training).",
+      "high_income_charge_threshold": 60000
+    },
+    "tax_free_childcare": {
+      "name": "Tax-Free Childcare",
+      "official_url": "https://www.gov.uk/tax-free-childcare",
+      "benefit": "Government adds £2 for every £8 you pay in.",
+      "annual_max_per_child": 2000,
+      "annual_max_per_disabled_child": 4000
+    }
+  },
+  "better_off_in_work_logic": {
+    "universal_credit_impact": "Total UC = Elements - (Earnings - Work Allowance) * Taper Rate - Other Income (e.g. Carer's Allowance). Note: Child Benefit is NOT deducted from UC payments.",
+    "carers_allowance_impact": "Loss of full benefit if earnings > £204/week.",
+    "child_benefit_impact": "High Income Child Benefit Charge applies if one parent earns > £60,000/year (fully tapered off at £80,000). Note: Lead previously suggested £50k threshold, but official 2024-2026 data confirms £60k.",
+    "notes": "DLA/PIP are ignored in UC income calculations. UC Carer Element and UC Disabled Child Additions remain even if working. Child Benefit is included in the Benefit Cap, which may indirectly affect total UC for some families."
+  }
+}

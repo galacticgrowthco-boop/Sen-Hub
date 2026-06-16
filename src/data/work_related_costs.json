@@ -1,0 +1,71 @@
+{
+  "last_updated": "2026-06-15",
+  "childcare_support_schemes": {
+    "universal_credit_childcare_element": {
+      "rebate_percentage": 0.85,
+      "monthly_caps": {
+        "one_child": 1071.09,
+        "two_or_more_children": 1836.16
+      },
+      "eligibility": "Both parents working (or one working and one with LCWRA/carer status in specific cases). Costs must be with a registered provider.",
+      "payment_method": "Reimbursement after costs are paid and reported. Help with upfront costs available via Flexible Support Fund or Budgeting Advance."
+    },
+    "tax_free_childcare": {
+      "standard_annual_topup_max": 2000.00,
+      "disabled_child_annual_topup_max": 4000.00,
+      "mechanic": "Government adds £2 for every £8 paid into the account.",
+      "disabled_child_definition": "Receiving DLA, PIP, or certified blind.",
+      "eligibility": "Both parents working (or single parent), each earning at least £190/week (approx 16 hrs at NMW) and less than £100,000/year.",
+      "interaction": "MUTUALLY EXCLUSIVE with Universal Credit. You cannot get both at the same time."
+    },
+    "free_childcare_hours_england": {
+      "working_parent_entitlement": {
+        "hours": 30,
+        "weeks_per_year": 38,
+        "child_age_range": "9 months to 4 years",
+        "eligibility_income_floor": "16 hours/week at National Minimum Wage (approx £2,643 per quarter)",
+        "eligibility_income_ceiling": "Under £100,000 adjusted net income per parent"
+      },
+      "sen_specific_15_hours": {
+        "hours": 15,
+        "weeks_per_year": 38,
+        "child_age": "2 years old",
+        "eligibility": "Child receives DLA or has an EHCP (Education, Health and Care Plan). Not dependent on parent work status."
+      },
+      "disability_access_fund_daf": {
+        "amount_per_year": 910.00,
+        "description": "Grant paid directly to the childcare provider to help them make reasonable adjustments for a child on DLA."
+      }
+    }
+  },
+  "commuting_and_travel_costs": {
+    "hmrc_mileage_rates": {
+      "cars_and_vans": "45p per mile for first 10,000 miles, 25p thereafter",
+      "motorcycles": "24p per mile",
+      "bicycles": "20p per mile"
+    },
+    "weekly_commuting_calculation_example": {
+      "scenario": "20-mile round trip, 5 days a week",
+      "calculation": "20 miles * 5 days * 0.45 £/mile = £45.00 per week",
+      "note": "This is a real-world cost that reduces the parent's actual net gain from working."
+    },
+    "public_transport": {
+      "typical_costs": "Variable by region. Users should input their monthly/weekly season ticket price.",
+      "note": "Public transport costs are not deductible from earnings for UC taper calculations (except for some self-employed expenses)."
+    },
+    "flexible_support_fund_fsf": {
+      "description": "Discretionary fund managed by local Jobcentres to help with the costs of getting into work.",
+      "allowable_costs": ["Travel to interviews", "Childcare to attend interviews", "Travel costs for the first month of a new job until the first paycheck"],
+      "eligibility": "Must be claiming a qualifying benefit (e.g. UC) and have the expense approved by a Work Coach."
+    },
+    "access_to_work_travel_support": {
+      "eligibility": "Disabled workers (including parents with their own disabilities) who cannot use public transport.",
+      "support": "Can cover taxi fares to work or adaptations to vehicles.",
+      "benefit_interaction": "Grants are not counted as income and do not reduce UC or other benefits."
+    }
+  },
+  "better_off_calculation_notes": {
+    "formula": "Net Gain = (Gross Pay - Tax - NI - Pension) + (UC Elements - (Earnings - Work Allowance) * 0.55) - Childcare Gap (15% or more) - Commuting Costs",
+    "critical_choice": "Families must choose between UC Childcare Element (85% rebate) and Tax-Free Childcare (25% top-up). UC is generally better for lower/middle earners."
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "education_support": {
+    "ehcp": {
+      "name": "Education, Health and Care Plan (EHCP)",
+      "description": "A legal document that describes a child's special educational, health and social care needs and the support they will get.",
+      "gateway_to": [
+        "Specialist school placement",
+        "Personal Budgets",
+        "Home-to-school transport"
+      ]
+    },
+    "home_to_school_transport": {
+      "name": "Home-to-School Transport",
+      "eligibility": "Children with SEN or disabilities who cannot reasonably be expected to walk to school.",
+      "support": "Free transport (bus, taxi, or mileage allowance) provided by the Local Authority."
+    },
+    "disabled_students_allowance_dsa": {
+      "name": "Disabled Students' Allowance (DSA)",
+      "description": "Support for higher education students with a learning difficulty, health condition or disability.",
+      "coverage": ["Specialist equipment", "Non-medical helpers", "Extra travel costs"]
+    },
+    "pupil_premium": {
+      "name": "Pupil Premium",
+      "description": "Funding for schools to help disadvantaged pupils of all abilities to perform better, and close the gap between them and their peers.",
+      "rates_2026_27": {
+        "primary_fsm_ever_6": 1455,
+        "secondary_fsm_ever_6": 1035,
+        "looked_after_children": 2570,
+        "previously_looked_after_children": 2570,
+        "service_children": 340
+      },
+      "eligibility": "Pupils currently eligible for Free School Meals, or who have been at any point in the last 6 years ('Ever 6'), LAC, and PLAC."
+    },
+    "free_school_meals": {
+      "name": "Free School Meals (FSM)",
+      "infant_fsm": "All children in Reception, Year 1, and Year 2 in government-funded schools are entitled to free school meals.",
+      "eligibility_criteria": {
+        "description": "For older children, eligibility depends on the household receiving certain benefits.",
+        "universal_credit_threshold": 7400,
+        "other_qualifying_benefits": [
+          "Income Support",
+          "Income-based Jobseeker’s Allowance",
+          "Income-related Employment and Support Allowance",
+          "Support under Part VI of the Immigration and Asylum Act 1999",
+          "The guaranteed element of Pension Credit",
+          "Child Tax Credit (if not receiving Working Tax Credit and income < £16,190)",
+          "Working Tax Credit run-on"
+        ]
+      }
+    },
+    "16_19_bursary_fund": {
+      "name": "16-19 Bursary Fund",
+      "types": {
+        "vulnerable_student_bursary": {
+          "amount": "Up to £1,200 per year",
+          "eligibility": "Includes those receiving DLA or PIP in their own right and Universal Credit or ESA."
+        },
+        "discretionary_bursary": {
+          "amount": "Decided by school/college",
+          "eligibility": "Financial need (e.g. low household income)."
+        }
+      }
+    },
+    "school_uniform_grant": {
+      "name": "School Uniform Grant",
+      "description": "Financial help to buy school uniform for children from low-income families.",
+      "note": "Discretionary and provided by some local councils in England."
+    },
+    "early_years_support": {
+      "early_years_pupil_premium": {
+        "name": "Early Years Pupil Premium (EYPP)",
+        "amount_2026_27": "£342 per year",
+        "eligibility": "3 and 4-year-olds receiving the free entitlement and meeting the same criteria as Pupil Premium (e.g. FSM)."
+      },
+      "disability_access_fund": {
+        "name": "Disability Access Fund (DAF)",
+        "amount_2026_27": "£828 per year",
+        "eligibility": "3 and 4-year-olds who are receiving the free entitlement and are in receipt of Disability Living Allowance (DLA)."
+      }
+    },
+    "sen_school_funding": {
+      "notional_sen_budget": {
+        "description": "The amount of money a school receives to support its pupils with SEN. Schools are expected to fund the first £6,000 of additional support for a child with SEN from this budget.",
+        "threshold": 6000
+      },
+      "top_up_funding": {
+        "name": "Top-up Funding (Element 3)",
+        "description": "Funding provided by the local authority for children with high-level needs (usually those with an EHCP) that cost more than the school's notional SEN budget covers."
+      }
+    },
+    "holiday_activity_and_food_programme": {
+      "name": "Holiday Activity and Food (HAF) Programme",
+      "description": "Provides healthy food and enriching activities to children who receive benefits-related free school meals during the school holidays.",
+      "eligibility": "Children receiving benefits-related Free School Meals."
+    }
+  },
+  "local_authority_schemes": {
+    "short_breaks": {
+      "name": "Short Breaks (Respite)",
+      "description": "Support to give parents a break from caring and children a chance to take part in activities.",
+      "eligibility": "Assessments by children's social care services."
+    },
+    "max_card": {
+      "name": "Max Card",
+      "description": "Discount card for foster carers and families of children with additional needs to visit attractions at a lower cost."
+    }
+  }
+}

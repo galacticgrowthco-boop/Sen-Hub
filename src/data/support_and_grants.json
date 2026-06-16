@@ -1,0 +1,62 @@
+{
+  "tax_year": "2026-2027",
+  "grants_and_support": {
+    "disabled_facilities_grant_dfg": {
+      "name": "Disabled Facilities Grant (DFG)",
+      "official_url": "https://www.gov.uk/disabled-facilities-grants",
+      "description": "Grant to help with the cost of adapting your home to meet the needs of a disabled person.",
+      "amount_england_max": 30000,
+      "amount_wales_max": 36000,
+      "amount_ni_max": 25000,
+      "means_tested": "Yes for adults, but usually NOT means-tested for children under 19 in England (check local council rules).",
+      "qualifying_works": ["Ramps", "Stairlifts", "Level access showers", "Widening doors"]
+    },
+    "family_fund": {
+      "name": "Family Fund",
+      "official_url": "https://www.familyfund.org.uk/",
+      "description": "Charity providing grants for disabled or seriously ill children and young people.",
+      "eligibility": "Low income families (usually under £35,000 household income). Child must have high support needs.",
+      "typical_grants": ["Kitchen appliances", "Furniture", "Clothing", "Computers", "Sensory toys", "Family breaks"]
+    },
+    "motability_scheme": {
+      "name": "Motability Scheme",
+      "official_url": "https://www.motability.co.uk/",
+      "description": "Lease a car, powered wheelchair, or scooter in exchange for your mobility allowance.",
+      "qualifying_allowances": [
+        "DLA Higher Mobility Rate",
+        "PIP Enhanced Mobility Rate"
+      ]
+    },
+    "blue_badge": {
+      "name": "Blue Badge Scheme",
+      "official_url": "https://www.gov.uk/apply-blue-badge",
+      "description": "Parking concessions for disabled people.",
+      "eligibility": "Automatic if receiving DLA Higher Mobility or PIP Mobility (8+ points for 'moving around' or 10+ points for 'planning and following a journey')."
+    },
+    "council_tax_disability_reduction": {
+      "name": "Council Tax Disability Reduction Scheme",
+      "description": "Reduces your Council Tax band by one level.",
+      "eligibility": [
+        "An extra bathroom or kitchen needed for the disabled person",
+        "A room (other than a bathroom or kitchen) needed for the disabled person (e.g. for treatment)",
+        "Space for a wheelchair used indoors"
+      ]
+    },
+    "water_sure": {
+      "name": "WaterSure Scheme",
+      "description": "Caps your water bill if you have a water meter and need to use a lot of water for medical reasons or have 3+ children.",
+      "eligibility": "Receiving a qualifying benefit (e.g. UC, Child Tax Credit) AND have a medical condition requiring high water use OR 3+ children under 19."
+    },
+    "nhs_help_with_health_costs": {
+      "name": "NHS Help with Health Costs",
+      "official_url": "https://www.nhs.uk/nhs-services/help-with-health-costs/",
+      "benefits": [
+        "Free prescriptions (for children under 16/18, or if on UC)",
+        "Free NHS dental treatment",
+        "Free NHS eyesight tests and vouchers for glasses",
+        "Hospital travel costs"
+      ],
+      "eligibility": "Automatic for children under 16. Adults qualify if on Universal Credit (with net earnings below threshold), Income Support, or have an HC2 certificate."
+    }
+  }
+}

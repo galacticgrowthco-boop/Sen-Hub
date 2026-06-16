@@ -1,0 +1,81 @@
+{
+  "last_updated": "2026-06-15",
+  "charity_grants": [
+    {
+      "charity_name": "Family Fund",
+      "official_url": "https://www.familyfund.org.uk/",
+      "grant_types": ["Kitchen appliances", "Furniture", "Clothing", "Computers", "Sensory toys", "Family breaks"],
+      "eligibility_rules": {
+        "child_age": "0-17 (sometimes up to 24 in Scotland)",
+        "income": "Low income or receiving means-tested benefits (usually under £35,000 household income)",
+        "residency": "Lived in UK for last 6 months",
+        "disability_level": "Child must have high support needs in 3+ areas"
+      },
+      "how_to_apply": "Online application or paper pack."
+    },
+    {
+      "charity_name": "Newlife the Charity for Disabled Children",
+      "official_url": "https://newlifecharity.co.uk/",
+      "grant_types": ["Equipment grants (wheelchairs, specialist beds, car seats)", "Emergency equipment loans"],
+      "eligibility_rules": {
+        "child_age": "Under 19",
+        "condition": "Disabled or terminally ill children"
+      },
+      "how_to_apply": "Application through a professional (e.g. OT, physiotherapist)."
+    },
+    {
+      "charity_name": "Children Today",
+      "official_url": "https://www.childrentoday.org.uk/",
+      "grant_types": ["Specialist equipment (adapted trikes, sensory equipment, communication aids)"],
+      "eligibility_rules": {
+        "age": "Up to 25",
+        "condition": "Children and young people with disabilities"
+      },
+      "how_to_apply": "Check website for current funding rounds."
+    },
+    {
+      "charity_name": "Tree of Hope",
+      "official_url": "https://www.treeofhope.org.uk/",
+      "grant_types": ["Fundraising support for specialist healthcare, therapies, and equipment not available on the NHS"],
+      "eligibility_rules": {
+        "description": "Families of sick and disabled children under 18 (or up to 25 in some cases) needing to raise funds for medical treatment or equipment."
+      },
+      "how_to_apply": "Register as a beneficiary family to start a fundraising campaign with charity status."
+    },
+    {
+      "charity_name": "Horatio's Garden",
+      "official_url": "https://www.horatiosgarden.org.uk/",
+      "grant_types": ["Accessible gardens and therapeutic support in NHS spinal injury centres"],
+      "eligibility_rules": {
+        "description": "Patients and families using NHS spinal injury centres where a garden is established."
+      },
+      "how_to_apply": "Accessed via the clinical team at the spinal centre."
+    },
+    {
+      "charity_name": "Turn2Us",
+      "official_url": "https://www.turn2us.org.uk/",
+      "grant_types": ["Grants search tool", "Direct grants for people on low income"],
+      "eligibility_rules": {
+        "description": "Uses a search tool to find specific grants based on background, occupation, or medical condition."
+      },
+      "how_to_apply": "Use the online 'Grant Search' tool."
+    },
+    {
+      "charity_name": "Contact",
+      "official_url": "https://contact.org.uk/",
+      "grant_types": ["Information and advice on grants"],
+      "eligibility_rules": {
+        "description": "Support for families with disabled children."
+      },
+      "how_to_apply": "Provides a helpline and guides to other grant-giving bodies."
+    }
+  ],
+  "local_charitable_trusts_guide": {
+    "how_to_find": [
+      "Ask your child's Social Worker or Occupational Therapist",
+      "Search the Charity Commission register for local keywords",
+      "Check with your local Council's 'Local Offer' website",
+      "Turn2Us Grants Search tool"
+    ]
+  }
+}

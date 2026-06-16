@@ -1,0 +1,50 @@
+{
+  "last_updated": "2026-06-15",
+  "universal_credit_work_rules": {
+    "taper_rate": 0.55,
+    "taper_description": "For every £1 earned above the work allowance, UC payment is reduced by 55p.",
+    "monthly_work_allowances": {
+      "with_housing_support": 427.00,
+      "without_housing_support": 710.00,
+      "eligibility": "SEN parents qualify as they are responsible for a child."
+    },
+    "childcare_costs": {
+      "rebate_percentage": 0.85,
+      "max_monthly_one_child": 1071.09,
+      "max_monthly_two_plus_children": 1836.16,
+      "note": "Paid upfront by claimant and then reclaimed through UC."
+    }
+  },
+  "carers_allowance_work_rules": {
+    "weekly_earnings_limit": 204.00,
+    "cliff_edge": true,
+    "cliff_edge_description": "Earnings of £204.01 result in 100% loss of the £86.45 weekly benefit.",
+    "allowable_deductions": {
+      "income_tax": "100% deductible",
+      "national_insurance": "100% deductible",
+      "pension_contributions": "50% of any contribution is deductible",
+      "work_expenses": [
+        "Equipment needed for work (e.g. specialist clothing)",
+        "Travel between different workplaces (not commute to one place)",
+        "Business costs for self-employed"
+      ],
+      "care_costs": {
+        "description": "Cost of a carer to look after the disabled person or children while working.",
+        "limit": "Up to 50% of net earnings (after other deductions).",
+        "restriction": "Carer cannot be a close relative (spouse, partner, parent, child, sibling)."
+      }
+    }
+  },
+  "disability_benefits_work_interaction": {
+    "dla_for_children": {
+      "earnings_impact": "None. Non-means-tested.",
+      "earnings_limit": "None.",
+      "review_risk": "Work activity that contradicts the level of disability reported (e.g. physical work when claiming high mobility) may be used as evidence during periodic reviews."
+    },
+    "pip": {
+      "earnings_impact": "None. Non-means-tested.",
+      "earnings_limit": "None.",
+      "review_risk": "Similar to DLA, the ability to work is not an automatic bar, but the functional tasks performed at work are relevant to the assessment."
+    }
+  }
+}
