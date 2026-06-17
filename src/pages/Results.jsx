@@ -204,6 +204,17 @@ const Results = () => {
                     <Gift className="w-5 h-5" />
                     <span className="font-bold text-sm">Charity Grants Directory</span>
                   </div>
+                  <ChevronRight className="w-4 h-4 text-emerald-400" />
+                </Link>
+                <Link 
+                  to="/dla-guide"
+                  className="flex items-center justify-between p-4 bg-blue-50 rounded-2xl text-blue-700 hover:bg-blue-100 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <ShieldCheck className="w-5 h-5" />
+                    <span className="font-bold text-sm">DLA Application Guide</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-blue-400" />
                 </Link>
               </div>
             </div>
@@ -274,7 +285,9 @@ const ResultCard = ({ result }) => (
       <div>
         <div className="flex items-center gap-2">
           <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
-            result.category === 'Education Support' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'
+            result.category === 'Education Support' ? 'bg-blue-100 text-blue-700' : 
+            result.category === 'Grants' ? 'bg-emerald-100 text-emerald-700' :
+            'bg-slate-100 text-slate-600'
           }`}>
             {result.category}
           </span>
@@ -303,12 +316,18 @@ const ResultCard = ({ result }) => (
           <Info className="w-4 h-4 text-indigo-600" />
           Calculation Breakdown
         </div>
-        {result.detailedBreakdown.map((detail, index) => (
-          <div key={index} className={`flex justify-between text-sm ${detail.isTotal ? 'pt-2 border-t border-slate-200 font-bold text-slate-900' : detail.isInfo ? 'text-indigo-600 italic' : 'text-slate-500'}`}>
-            <span>{detail.label}</span>
-            <span className="font-mono">{detail.value < 0 ? '-' : ''}£{Math.abs(detail.value).toFixed(2)}</span>
-          </div>
-        ))}
+        <table className="w-full text-sm">
+          <tbody className="divide-y divide-slate-200">
+            {result.detailedBreakdown.map((detail, index) => (
+              <tr key={index} className={detail.isTotal ? 'font-bold text-slate-900' : detail.isInfo ? 'text-indigo-600 italic' : 'text-slate-500'}>
+                <td className="py-2 pr-4">{detail.label}</td>
+                <td className="py-2 text-right font-mono">
+                  {detail.value < 0 ? '-' : ''}£{Math.abs(detail.value).toFixed(2)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     )}
     {result.gateway_to && (
@@ -329,23 +348,25 @@ const ResultCard = ({ result }) => (
         <p>{result.warning}</p>
       </div>
     )}
-    {result.local_url ? (
-      <Link 
-        to={result.local_url}
-        className="inline-flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline"
-      >
-        {result.category === 'Grants' ? 'View Grants Directory' : 'View Application Guide'} <ChevronRight className="w-3 h-3" />
-      </Link>
-    ) : result.official_url && (
-      <a 
-        href={result.official_url} 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline"
-      >
-        How to apply <ExternalLink className="w-3 h-3" />
-      </a>
-    )}
+    <div className="pt-2">
+      {result.local_url ? (
+        <Link 
+          to={result.local_url}
+          className="inline-flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline"
+        >
+          {result.category === 'Grants' ? 'View Grants Directory' : 'View Application Guide'} <ChevronRight className="w-3 h-3" />
+        </Link>
+      ) : result.official_url && (
+        <a 
+          href={result.official_url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline"
+        >
+          How to apply <ExternalLink className="w-3 h-3" />
+        </a>
+      )}
+    </div>
   </div>
 );
 

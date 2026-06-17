@@ -460,7 +460,7 @@ export const calculateEntitlements = (answers) => {
       id: 'ctr',
       ...ld.council_tax.council_tax_reduction,
       category: 'Benefits',
-      status: 'likely'
+      status: 'check'
     });
   }
 

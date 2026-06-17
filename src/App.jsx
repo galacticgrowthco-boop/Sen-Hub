@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Calculator from './pages/Calculator';
 import Results from './pages/Results';
 import GrantsDirectory from './pages/GrantsDirectory';
+import DLAGuide from './pages/DLAGuide';
 
 function App() {
   return (
