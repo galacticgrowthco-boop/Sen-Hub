@@ -27,6 +27,7 @@ export const calculateEntitlements = (answers) => {
     commuting_method,
     weekly_miles,
     weekly_transport_costs,
+    monthly_rent,
     home_adaptations,
     water_meter
   } = answers;
@@ -36,6 +37,7 @@ export const calculateEntitlements = (answers) => {
   const weeklyEarningsNum = parseFloat(weekly_earnings || 0);
   const householdIncomeNum = parseFloat(household_income || 0);
   const monthlyEarningsNum = weeklyEarningsNum * 52 / 12;
+  const monthlyRentNum = parseFloat(monthly_rent || 0);
   
   const weeklyChildcareNum = parseFloat(weekly_childcare_costs || 0);
   const monthlyChildcareNum = weeklyChildcareNum * 52 / 12;
@@ -66,7 +68,9 @@ export const calculateEntitlements = (answers) => {
       mobility: answers[`child_${i}_mobility`],
       diagnosis: answers[`child_${i}_diagnosis`],
       ehcp: answers[`child_${i}_ehcp`],
-      existing_dla: answers[`child_${i}_existing_dla`] === 'yes'
+      existing_dla: answers[`child_${i}_existing_dla`] === 'yes',
+      dla_care: answers[`child_${i}_dla_care`],
+      dla_mobility: answers[`child_${i}_dla_mobility`]
     });
   }
 
@@ -75,17 +79,28 @@ export const calculateEntitlements = (answers) => {
   children.forEach((child, index) => {
     if (child.age < 16 && (child.care === 'yes' || child.mobility === 'yes' || child.existing_dla)) {
       const dla = benefitsData.benefits.dla_children;
-      const weekly = (child.care === 'yes' || child.existing_dla || hasExistingDLA ? dla.rates.care.middle : 0) + 
-                     (child.mobility === 'yes' ? dla.rates.mobility.lower : 0);
-      
+      let weekly = 0;
+
+      if (child.dla_care && child.dla_care !== 'none') {
+        weekly += dla.rates.care[child.dla_care] || 0;
+      } else if (child.care === 'yes' || child.existing_dla) {
+        weekly += dla.rates.care.middle;
+      }
+
+      if (child.dla_mobility && child.dla_mobility !== 'none') {
+        weekly += dla.rates.mobility[child.dla_mobility] || 0;
+      } else if (child.mobility === 'yes') {
+        weekly += dla.rates.mobility.lower;
+      }
+
       if (weekly > 0) {
         const monthly = weekly * 52 / 12;
         totalMonthlyDisability += monthly;
-        
+
         let likelihood = 'potential';
-        if (child.existing_dla || hasExistingDLA) likelihood = 'active';
+        if (child.existing_dla) likelihood = 'active';
         else if (child.diagnosis === 'yes') likelihood = 'likely';
-        
+
         entitlements.push({
           id: `dla_child_${index+1}`,
           name: `DLA for Child ${index+1}`,
@@ -93,23 +108,37 @@ export const calculateEntitlements = (answers) => {
           amount: `£${weekly.toFixed(2)}`,
           period: 'weekly',
           status: likelihood,
-          description: (child.existing_dla || hasExistingDLA)
-            ? `You are already receiving this support for child ${index+1}.`
+          description: child.existing_dla
+            ? `Current award for child ${index+1}.`
             : `Estimated based on reported needs for child ${index+1}. ${child.diagnosis === 'yes' ? 'Formal diagnosis strongly supports this claim.' : child.diagnosis === 'in_process' ? 'Being in the diagnosis process supports your application.' : ''}`,
           official_url: dla.official_url
         });
       }
     } else if (child.age >= 16) {
       const pip = benefitsData.benefits.pip;
-      const weekly = (child.care === 'yes' || child.existing_dla || hasExistingDLA ? pip.rates.daily_living.standard : 0) + 
-                     (child.mobility === 'yes' ? pip.rates.mobility.standard : 0);
-      
+      let weekly = 0;
+
+      if (child.dla_care && child.dla_care !== 'none') {
+        // Map DLA highest/middle to PIP enhanced/standard
+        if (child.dla_care === 'highest') weekly += pip.rates.daily_living.enhanced;
+        else weekly += pip.rates.daily_living.standard;
+      } else if (child.care === 'yes' || child.existing_dla) {
+        weekly += pip.rates.daily_living.standard;
+      }
+
+      if (child.dla_mobility && child.dla_mobility !== 'none') {
+        if (child.dla_mobility === 'higher') weekly += pip.rates.mobility.enhanced;
+        else weekly += pip.rates.mobility.standard;
+      } else if (child.mobility === 'yes') {
+        weekly += pip.rates.mobility.standard;
+      }
+
       if (weekly > 0) {
         const monthly = weekly * 52 / 12;
         totalMonthlyDisability += monthly;
-        
+
         let likelihood = 'check';
-        if (child.existing_dla || hasExistingDLA) likelihood = 'active';
+        if (child.existing_dla) likelihood = 'active';
         else if (child.diagnosis === 'yes') likelihood = 'likely';
 
         entitlements.push({
@@ -119,8 +148,8 @@ export const calculateEntitlements = (answers) => {
           amount: `£${weekly.toFixed(2)}`,
           period: 'weekly',
           status: likelihood,
-          description: (child.existing_dla || hasExistingDLA)
-            ? `You are already receiving this support for child ${index+1}.`
+          description: child.existing_dla
+            ? `Current award for child ${index+1}.`
             : `Personal Independence Payment for child ${index+1} (16+).`,
           official_url: pip.official_url
         });
@@ -220,8 +249,10 @@ export const calculateEntitlements = (answers) => {
   // Disabled Child Additions
   let disabledChildAdditionTotal = 0;
   children.forEach(child => {
-    if (child.care === 'yes' || child.mobility === 'yes' || child.existing_dla || hasExistingDLA) {
-      const rate = (child.care === 'yes' || child.existing_dla || hasExistingDLA) ? uc.disabled_child_additions.higher_rate : uc.disabled_child_additions.lower_rate;
+    if (child.care === 'yes' || child.mobility === 'yes' || child.existing_dla) {
+      // Trigger higher rate if Higher Rate Care DLA or Enhanced Daily Living PIP
+      const isHigher = child.dla_care === 'highest' || (child.care === 'yes' && !child.dla_care);
+      const rate = isHigher ? uc.disabled_child_additions.higher_rate : uc.disabled_child_additions.lower_rate;
       disabledChildAdditionTotal += rate;
     }
   });
@@ -229,6 +260,13 @@ export const calculateEntitlements = (answers) => {
   ucElements += disabledChildAdditionFactored;
   if (disabledChildAdditionFactored > 0) {
     ucBreakdown.push({ label: 'Disabled Child Addition(s)', value: disabledChildAdditionFactored });
+  }
+
+  // Housing Element (Simplified)
+  if (housing_costs === 'yes' && monthlyRentNum > 0) {
+    // In a real app we'd check LHA rates. For now we use the rent as a potential amount.
+    ucElements += monthlyRentNum;
+    ucBreakdown.push({ label: 'Housing Element (Estimated Rent)', value: monthlyRentNum });
   }
 
   // Carer Element
@@ -272,11 +310,15 @@ export const calculateEntitlements = (answers) => {
     
     // Subtraction logic for granular elements already received
     let amountAlreadyReceived = 0;
+    if (existing_benefits.includes('universal_credit')) {
+      amountAlreadyReceived += standardAllowanceAmt + childElementTotal;
+      if (housing_costs === 'yes') amountAlreadyReceived += monthlyRentNum;
+    }
     if (hasExistingUC_DC) amountAlreadyReceived += disabledChildAdditionFactored;
-    if (hasExistingUC_Carer && (hours_care === 'more_35')) amountAlreadyReceived += uc.carer_element;
-    if (hasExistingUC_Health && (healthElementAmt > 0)) amountAlreadyReceived += healthElementAmt;
+    if (hasExistingUC_Carer) amountAlreadyReceived += uc.carer_element;
+    if (hasExistingUC_Health) amountAlreadyReceived += healthElementAmt;
 
-    const potentialIncrease = Math.max(0, netUC - amountAlreadyReceived);
+    const potentialIncrease = Math.max(0, netUC - (existing_benefits.includes('universal_credit') ? amountAlreadyReceived : 0));
     
     return {
       total: Math.max(0, netUC),
@@ -299,9 +341,9 @@ export const calculateEntitlements = (answers) => {
 
   entitlements.push({
     id: 'universal_credit',
-    name: isUCActive ? "Universal Credit (Total Estimate)" : "Universal Credit (Estimated)",
+    name: isUCActive ? "Universal Credit (Potential Increase)" : "Universal Credit (Estimated)",
     category: 'Benefits',
-    amount: `£${finalUC.total.toFixed(2)}`,
+    amount: `£${(isUCActive ? finalUC.potentialIncrease : finalUC.total).toFixed(2)}`,
     period: uc.frequency,
     status: isUCActive ? 'active' : 'check',
     description: isUCActive 
@@ -397,16 +439,61 @@ export const calculateEntitlements = (answers) => {
         official_url: 'https://www.gov.uk/help-home-school-transport'
       });
     }
+
+    // Max Card
+    if (child.care === 'yes' || child.diagnosis === 'yes' || child.existing_dla || hasExistingDLA) {
+      entitlements.push({
+        id: `max_card_child_${index+1}`,
+        name: localSupportData.local_authority_schemes.max_card.name,
+        category: 'Local Support',
+        status: 'info',
+        description: localSupportData.local_authority_schemes.max_card.description,
+        official_url: 'https://mymaxcard.co.uk/'
+      });
+    }
   });
 
   // 8. Local Discounts
   const ld = localDiscountsData;
-  if (hasUC || householdIncomeNum < 16000) {
+  if (hasUC || householdIncomeNum < 20000) {
     entitlements.push({
       id: 'ctr',
       ...ld.council_tax.council_tax_reduction,
       category: 'Benefits',
       status: 'likely'
+    });
+  }
+
+  if (status === 'single') {
+    entitlements.push({
+      id: 'single_person_discount',
+      name: "Single Person Council Tax Discount",
+      category: 'Benefits',
+      amount: '25%',
+      period: 'reduction',
+      status: 'active',
+      description: "As a single adult household, you are entitled to a 25% reduction on your Council Tax bill.",
+      official_url: "https://www.gov.uk/council-tax/who-has-to-pay"
+    });
+  }
+
+  if (home_adaptations === 'yes') {
+    entitlements.push({
+      id: 'disabled_band_reduction',
+      ...ld.council_tax.disabled_band_reduction,
+      category: 'Benefits',
+      status: 'check'
+    });
+  }
+
+  // SMI Discount (Severe Mental Impairment)
+  const hasAdultChildWithSMI = children.some(c => c.age >= 18 && (c.care === 'yes' || c.existing_dla));
+  if (hasAdultChildWithSMI) {
+    entitlements.push({
+      id: 'smi_discount',
+      ...ld.council_tax.smi_discount,
+      category: 'Benefits',
+      status: 'check'
     });
   }
 
@@ -436,7 +523,8 @@ export const calculateEntitlements = (answers) => {
         category: 'Grants',
         status: status,
         description: charity.grant_types ? `Can provide help with: ${charity.grant_types.join(', ')}` : charity.eligibility_rules?.description || 'Information and advice on grants.',
-        official_url: charity.official_url
+        official_url: charity.official_url,
+        local_url: '/grants'
       });
     }
   });

@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Calculator from './pages/Calculator';
 import Results from './pages/Results';
-import DLAGuide from './pages/DLAGuide';
 import GrantsDirectory from './pages/GrantsDirectory';
 
 function App() {

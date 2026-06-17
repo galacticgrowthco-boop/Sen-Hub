@@ -5,6 +5,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const allQuestions = [
   {
+    id: 'existing_benefits',
+    question: "Which of these benefits do you already receive?",
+    type: 'multi-choice',
+    options: [
+      { value: 'dla_child', label: 'DLA for my child/children' },
+      { value: 'claimant_pip', label: 'PIP for myself' },
+      { value: 'carers_allowance', label: "Carer's Allowance" },
+      { value: 'universal_credit', label: 'Universal Credit' },
+      { value: 'uc_disabled_child', label: 'UC — Disabled Child Addition' },
+      { value: 'uc_carer_element', label: 'UC — Carer Element' },
+      { value: 'uc_health_element', label: 'UC — LCW or LCWRA Element' },
+      { value: 'child_benefit', label: 'Child Benefit' },
+      { value: 'none', label: 'None of these' }
+    ],
+    description: "This helps us calculate your 'Potential Increase' and avoid double-counting."
+  },
+  {
     id: 'is_working',
     question: "Are you currently working?",
     type: 'choice',
@@ -13,22 +30,6 @@ const allQuestions = [
       { value: 'no', label: 'No, I am not working' }
     ],
     description: "This helps us calculate your 'better-off in work' estimate."
-  },
-  {
-    id: 'existing_benefits',
-    question: "Which of these benefits do you already receive?",
-    type: 'multi-choice',
-    options: [
-      { value: 'dla_child', label: 'DLA for my child/children' },
-      { value: 'claimant_pip', label: 'PIP for myself' },
-      { value: 'carers_allowance', label: "Carer's Allowance" },
-      { value: 'uc_disabled_child', label: 'UC — Disabled Child Addition' },
-      { value: 'uc_carer_element', label: 'UC — Carer Element' },
-      { value: 'uc_health_element', label: 'UC — LCW or LCWRA Element' },
-      { value: 'child_benefit', label: 'Child Benefit' },
-      { value: 'none', label: 'None of these' }
-    ],
-    description: "Select all that apply."
   },
   {
     id: 'num_children',
@@ -66,6 +67,36 @@ const allQuestions = [
     description: "Benefits vary depending on whether your child is under 16, or 16+."
   },
   {
+    id: 'child_1_existing_dla',
+    question: "Does your first child already receive DLA or PIP?",
+    type: 'choice',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' }
+    ]
+  },
+  {
+    id: 'child_1_dla_care',
+    question: "What is the DLA/PIP Care or Daily Living rate for your first child?",
+    type: 'choice',
+    options: [
+      { value: 'highest', label: 'Highest / Enhanced' },
+      { value: 'middle', label: 'Middle / Standard' },
+      { value: 'lowest', label: 'Lowest' },
+      { value: 'none', label: 'None' }
+    ]
+  },
+  {
+    id: 'child_1_dla_mobility',
+    question: "What is the DLA/PIP Mobility rate for your first child?",
+    type: 'choice',
+    options: [
+      { value: 'higher', label: 'Higher / Enhanced' },
+      { value: 'lower', label: 'Lower / Standard' },
+      { value: 'none', label: 'None' }
+    ]
+  },
+  {
     id: 'child_1_care',
     question: "Does your first child need significantly more help than others their age?",
     type: 'choice',
@@ -87,8 +118,7 @@ const allQuestions = [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
       { value: 'in_process', label: 'In process' }
-    ],
-    description: "A formal diagnosis or being in the process can support benefit applications."
+    ]
   },
   {
     id: 'child_1_ehcp',
@@ -98,17 +128,6 @@ const allQuestions = [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
       { value: 'in_process', label: 'In process' }
-    ],
-    description: "An EHCP is a legal document that secures rights to specialist support, therapies, and potentially transport."
-  },
-  {
-    id: 'child_1_existing_dla',
-    question: "Does your first child already receive DLA or PIP?",
-    type: 'choice',
-    options: [
-      { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' },
-      { value: 'not_yet', label: 'Not yet / Applied' }
     ]
   },
   // Child 2
@@ -117,6 +136,36 @@ const allQuestions = [
     question: "How old is your second child?",
     type: 'number',
     placeholder: "Age in years"
+  },
+  {
+    id: 'child_2_existing_dla',
+    question: "Does your second child already receive DLA or PIP?",
+    type: 'choice',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' }
+    ]
+  },
+  {
+    id: 'child_2_dla_care',
+    question: "What is the DLA/PIP Care or Daily Living rate for your second child?",
+    type: 'choice',
+    options: [
+      { value: 'highest', label: 'Highest / Enhanced' },
+      { value: 'middle', label: 'Middle / Standard' },
+      { value: 'lowest', label: 'Lowest' },
+      { value: 'none', label: 'None' }
+    ]
+  },
+  {
+    id: 'child_2_dla_mobility',
+    question: "What is the DLA/PIP Mobility rate for your second child?",
+    type: 'choice',
+    options: [
+      { value: 'higher', label: 'Higher / Enhanced' },
+      { value: 'lower', label: 'Lower / Standard' },
+      { value: 'none', label: 'None' }
+    ]
   },
   {
     id: 'child_2_care',
@@ -150,22 +199,42 @@ const allQuestions = [
       { value: 'in_process', label: 'In process' }
     ]
   },
-  {
-    id: 'child_2_existing_dla',
-    question: "Does your second child already receive DLA or PIP?",
-    type: 'choice',
-    options: [
-      { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' },
-      { value: 'not_yet', label: 'Not yet / Applied' }
-    ]
-  },
   // Child 3
   {
     id: 'child_3_age',
     question: "How old is your third child?",
     type: 'number',
     placeholder: "Age in years"
+  },
+  {
+    id: 'child_3_existing_dla',
+    question: "Does your third child already receive DLA or PIP?",
+    type: 'choice',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' }
+    ]
+  },
+  {
+    id: 'child_3_dla_care',
+    question: "What is the DLA/PIP Care or Daily Living rate for your third child?",
+    type: 'choice',
+    options: [
+      { value: 'highest', label: 'Highest / Enhanced' },
+      { value: 'middle', label: 'Middle / Standard' },
+      { value: 'lowest', label: 'Lowest' },
+      { value: 'none', label: 'None' }
+    ]
+  },
+  {
+    id: 'child_3_dla_mobility',
+    question: "What is the DLA/PIP Mobility rate for your third child?",
+    type: 'choice',
+    options: [
+      { value: 'higher', label: 'Higher / Enhanced' },
+      { value: 'lower', label: 'Lower / Standard' },
+      { value: 'none', label: 'None' }
+    ]
   },
   {
     id: 'child_3_care',
@@ -197,16 +266,6 @@ const allQuestions = [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
       { value: 'in_process', label: 'In process' }
-    ]
-  },
-  {
-    id: 'child_3_existing_dla',
-    question: "Does your third child already receive DLA or PIP?",
-    type: 'choice',
-    options: [
-      { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' },
-      { value: 'not_yet', label: 'Not yet / Applied' }
     ]
   },
   {
@@ -245,6 +304,13 @@ const allQuestions = [
       { value: 'no', label: 'No' }
     ],
     description: "This affects your UC work allowance and non-dependant deductions."
+  },
+  {
+    id: 'monthly_rent',
+    question: "What is your monthly rent?",
+    type: 'number',
+    placeholder: "£ per month",
+    description: "Enter the full amount of your monthly rent."
   },
   {
     id: 'claimant_condition',
@@ -379,11 +445,28 @@ const Calculator = () => {
       if (q.id === 'commuting_method' && answers.is_working !== 'yes') return false;
       if (q.id === 'weekly_miles' && (answers.is_working !== 'yes' || answers.commuting_method !== 'driving')) return false;
       if (q.id === 'weekly_transport_costs' && (answers.is_working !== 'yes' || answers.commuting_method !== 'other')) return false;
-      
+      if (q.id === 'monthly_rent' && answers.housing_costs !== 'yes') return false;
+
       if (q.id.startsWith('child_')) {
         const match = q.id.match(/child_(\d+)_/);
         const childIndex = parseInt(match[1]);
         if (childIndex > parseInt(answers.num_children || 0)) return false;
+
+        if (q.id.endsWith('_care') || q.id.endsWith('_mobility')) {
+          const dlaKey = `child_${childIndex}_existing_dla`;
+          if (answers[dlaKey] === 'yes') return false;
+        }
+
+        if (q.id.endsWith('_dla_care') || q.id.endsWith('_dla_mobility')) {
+          const dlaKey = `child_${childIndex}_existing_dla`;
+          if (answers[dlaKey] !== 'yes') return false;
+        }
+
+        if (q.id.endsWith('_ehcp')) {
+          const careKey = `child_${childIndex}_care`;
+          const dlaKey = `child_${childIndex}_existing_dla`;
+          if (answers[dlaKey] !== 'yes' && answers[careKey] !== 'yes') return false;
+        }
       }
       return true;
     });

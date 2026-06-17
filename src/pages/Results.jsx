@@ -1,6 +1,6 @@
 import { useLocation, Link } from 'react-router-dom';
 import { useState, useRef } from 'react';
-import { CheckCircle2, AlertCircle, RefreshCcw, Download, ExternalLink, TrendingUp, Coffee, Bell, ShieldCheck, Gift, Info } from 'lucide-react';
+import { CheckCircle2, AlertCircle, RefreshCcw, Download, ExternalLink, TrendingUp, Coffee, Bell, ShieldCheck, Gift, Info, ChevronRight } from 'lucide-react';
 import { calculateEntitlements } from '../utils/matchingEngine';
 
 const Results = () => {
@@ -197,15 +197,6 @@ const Results = () => {
               <h4 className="font-bold text-slate-900">Useful Resources</h4>
               <div className="grid gap-3">
                 <Link 
-                  to="/dla-guide"
-                  className="flex items-center justify-between p-4 bg-indigo-50 rounded-2xl text-indigo-700 hover:bg-indigo-100 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <AlertCircle className="w-5 h-5" />
-                    <span className="font-bold text-sm">DLA Application Tips</span>
-                  </div>
-                </Link>
-                <Link 
                   to="/grants"
                   className="flex items-center justify-between p-4 bg-emerald-50 rounded-2xl text-emerald-700 hover:bg-emerald-100 transition-colors"
                 >
@@ -338,7 +329,14 @@ const ResultCard = ({ result }) => (
         <p>{result.warning}</p>
       </div>
     )}
-    {result.official_url && (
+    {result.local_url ? (
+      <Link 
+        to={result.local_url}
+        className="inline-flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline"
+      >
+        {result.category === 'Grants' ? 'View Grants Directory' : 'View Application Guide'} <ChevronRight className="w-3 h-3" />
+      </Link>
+    ) : result.official_url && (
       <a 
         href={result.official_url} 
         target="_blank" 
