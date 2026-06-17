@@ -7,7 +7,7 @@ const Results = () => {
   const location = useLocation();
   const answers = location.state?.answers || {};
   const donationRef = useRef(null);
-  const [showPremiumNotice, setShowPremiumPremiumNotice] = useState(false);
+  const [showPremiumNotice, setShowPremiumNotice] = useState(false);
 
   const { entitlements, comparison } = calculateEntitlements(answers);
   
@@ -20,7 +20,7 @@ const Results = () => {
   const isCurrentlyWorking = answers.is_working === 'yes';
 
   const scrollToDonation = () => {
-    setShowPremiumPremiumNotice(true);
+    setShowPremiumNotice(true);
     donationRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
