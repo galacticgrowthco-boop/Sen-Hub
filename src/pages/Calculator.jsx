@@ -296,21 +296,22 @@ const allQuestions = [
     description: "This helps calculate your Universal Credit standard allowance."
   },
   {
-    id: 'housing_costs',
-    question: "Do you receive help with housing costs (e.g. through Universal Credit)?",
+    id: 'housing_situation',
+    question: "What is your housing situation?",
     type: 'choice',
     options: [
-      { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' }
+      { value: 'renting', label: 'Renting' },
+      { value: 'mortgage', label: 'Mortgage' },
+      { value: 'own_outright', label: 'Own outright' }
     ],
-    description: "This affects your UC work allowance and non-dependant deductions."
+    description: "Universal Credit typically only provides help with housing costs for those who rent."
   },
   {
     id: 'monthly_rent',
     question: "What is your monthly rent?",
     type: 'number',
     placeholder: "£ per month",
-    description: "Enter the full amount of your monthly rent."
+    description: "Enter the full amount of your monthly rent before any housing benefit is deducted."
   },
   {
     id: 'claimant_condition',
@@ -445,7 +446,7 @@ const Calculator = () => {
       if (q.id === 'commuting_method' && answers.is_working !== 'yes') return false;
       if (q.id === 'weekly_miles' && (answers.is_working !== 'yes' || answers.commuting_method !== 'driving')) return false;
       if (q.id === 'weekly_transport_costs' && (answers.is_working !== 'yes' || answers.commuting_method !== 'other')) return false;
-      if (q.id === 'monthly_rent' && answers.housing_costs !== 'yes') return false;
+      if (q.id === 'monthly_rent' && answers.housing_situation !== 'renting') return false;
 
       if (q.id.startsWith('child_')) {
         const match = q.id.match(/child_(\d+)_/);

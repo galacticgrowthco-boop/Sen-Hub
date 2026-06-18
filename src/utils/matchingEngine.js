@@ -15,7 +15,7 @@ export const calculateEntitlements = (answers) => {
     other_adults,
     num_other_adults,
     status,
-    housing_costs,
+    housing_situation,
     claimant_condition,
     claimant_affect_work,
     claimant_work_capability,
@@ -101,6 +101,14 @@ export const calculateEntitlements = (answers) => {
         if (child.existing_dla) likelihood = 'active';
         else if (child.diagnosis === 'yes') likelihood = 'likely';
 
+        let rateDescription = '';
+        if (child.dla_care && child.dla_care !== 'none') {
+          rateDescription += `${child.dla_care.charAt(0).toUpperCase() + child.dla_care.slice(1)} Rate Care`;
+        }
+        if (child.dla_mobility && child.dla_mobility !== 'none') {
+          rateDescription += (rateDescription ? ' and ' : '') + `${child.dla_mobility.charAt(0).toUpperCase() + child.dla_mobility.slice(1)} Rate Mobility`;
+        }
+
         entitlements.push({
           id: `dla_child_${index+1}`,
           name: `DLA for Child ${index+1}`,
@@ -109,8 +117,8 @@ export const calculateEntitlements = (answers) => {
           period: 'weekly',
           status: likelihood,
           description: child.existing_dla
-            ? `Current award for child ${index+1}.`
-            : `Estimated based on reported needs for child ${index+1}. ${child.diagnosis === 'yes' ? 'Formal diagnosis strongly supports this claim.' : child.diagnosis === 'in_process' ? 'Being in the diagnosis process supports your application.' : ''}`,
+            ? `Current award (${rateDescription}) for child ${index+1}.`
+            : `Estimated (${rateDescription || 'Middle Care'}) based on reported needs for child ${index+1}. ${child.diagnosis === 'yes' ? 'Formal diagnosis strongly supports this claim.' : child.diagnosis === 'in_process' ? 'Being in the diagnosis process supports your application.' : ''}`,
           official_url: dla.official_url
         });
       }
@@ -250,8 +258,9 @@ export const calculateEntitlements = (answers) => {
   let disabledChildAdditionTotal = 0;
   children.forEach(child => {
     if (child.care === 'yes' || child.mobility === 'yes' || child.existing_dla) {
-      // Trigger higher rate if Higher Rate Care DLA or Enhanced Daily Living PIP
-      const isHigher = child.dla_care === 'highest' || (child.care === 'yes' && !child.dla_care);
+      // Trigger higher rate ONLY if Higher Rate Care DLA or Enhanced Daily Living PIP
+      // Otherwise use lower rate as default for potential/middle awards
+      const isHigher = child.dla_care === 'highest';
       const rate = isHigher ? uc.disabled_child_additions.higher_rate : uc.disabled_child_additions.lower_rate;
       disabledChildAdditionTotal += rate;
     }
@@ -263,7 +272,7 @@ export const calculateEntitlements = (answers) => {
   }
 
   // Housing Element (Simplified)
-  if (housing_costs === 'yes' && monthlyRentNum > 0) {
+  if (housing_situation === 'renting' && monthlyRentNum > 0) {
     // In a real app we'd check LHA rates. For now we use the rent as a potential amount.
     ucElements += monthlyRentNum;
     ucBreakdown.push({ label: 'Housing Element (Estimated Rent)', value: monthlyRentNum });
@@ -297,14 +306,18 @@ export const calculateEntitlements = (answers) => {
   // Work Allowance
   const hasWorkAllowanceEligibility = numChildrenNum > 0 || (healthElementAmt > 0) || (claimant_condition === 'yes' && claimant_affect_work !== 'no');
   const workAllowance = hasWorkAllowanceEligibility 
-    ? (housing_costs === 'yes' ? uc.work_allowance.with_housing_help : uc.work_allowance.without_housing_help)
+    ? (housing_situation === 'renting' ? uc.work_allowance.with_housing_help : uc.work_allowance.without_housing_help)
     : 0;
 
   const calculateUCForEarnings = (earnings) => {
     const excessEarnings = Math.max(0, earnings - workAllowance);
     const taperDeduction = excessEarnings * uc.taper_rate;
-    const caDeduction = (hours_care === 'more_35' || hasExistingCA) ? monthlyCA : 0;
-    const nonDepDeduction = (housing_costs === 'yes' && other_adults === 'yes') ? numOtherAdultsNum * 85.73 : 0;
+    
+    // CA Deduction: Only subtract if they already receive it.
+    // If they DON'T have it yet, we show it as a potential benefit separately.
+    const caDeduction = hasExistingCA ? monthlyCA : 0;
+    
+    const nonDepDeduction = (housing_situation === 'renting' && other_adults === 'yes') ? numOtherAdultsNum * 85.73 : 0;
 
     let netUC = ucElements - taperDeduction - caDeduction - nonDepDeduction;
     
@@ -312,7 +325,7 @@ export const calculateEntitlements = (answers) => {
     let amountAlreadyReceived = 0;
     if (existing_benefits.includes('universal_credit')) {
       amountAlreadyReceived += standardAllowanceAmt + childElementTotal;
-      if (housing_costs === 'yes') amountAlreadyReceived += monthlyRentNum;
+      if (housing_situation === 'renting') amountAlreadyReceived += monthlyRentNum;
     }
     if (hasExistingUC_DC) amountAlreadyReceived += disabledChildAdditionFactored;
     if (hasExistingUC_Carer) amountAlreadyReceived += uc.carer_element;
@@ -320,16 +333,19 @@ export const calculateEntitlements = (answers) => {
 
     const potentialIncrease = Math.max(0, netUC - (existing_benefits.includes('universal_credit') ? amountAlreadyReceived : 0));
     
+    const breakdown = [
+      { label: 'Total UC Elements', value: ucElements, isTotal: true },
+      { label: 'Work Allowance (ignored earnings)', value: workAllowance, isInfo: true },
+      { label: 'Earnings Deduction (55% taper)', value: -taperDeduction },
+    ];
+
+    if (nonDepDeduction > 0) breakdown.push({ label: 'Non-dependant Deduction', value: -nonDepDeduction });
+    if (caDeduction > 0) breakdown.push({ label: "Carer's Allowance Deduction", value: -caDeduction });
+    
     return {
       total: Math.max(0, netUC),
       potentialIncrease: potentialIncrease,
-      breakdown: [
-        { label: 'Total UC Elements', value: ucElements, isTotal: true },
-        { label: 'Work Allowance (ignored earnings)', value: workAllowance, isInfo: true },
-        { label: 'Earnings Deduction (55% taper)', value: -taperDeduction },
-        { label: 'Non-dependant Deduction', value: -nonDepDeduction },
-        { label: "Carer's Allowance Deduction", value: -caDeduction },
-      ]
+      breakdown
     };
   };
 
