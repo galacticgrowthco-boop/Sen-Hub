@@ -453,13 +453,17 @@ const Calculator = () => {
         const childIndex = parseInt(match[1]);
         if (childIndex > parseInt(answers.num_children || 0)) return false;
 
-        if (q.id.endsWith('_care') || q.id.endsWith('_mobility')) {
-          const dlaKey = `child_${childIndex}_existing_dla`;
+        const simpleCare = `child_${childIndex}_care`;
+        const simpleMobility = `child_${childIndex}_mobility`;
+        const dlaCare = `child_${childIndex}_dla_care`;
+        const dlaMobility = `child_${childIndex}_dla_mobility`;
+        const dlaKey = `child_${childIndex}_existing_dla`;
+
+        if (q.id === simpleCare || q.id === simpleMobility) {
           if (answers[dlaKey] === 'yes') return false;
         }
 
-        if (q.id.endsWith('_dla_care') || q.id.endsWith('_dla_mobility')) {
-          const dlaKey = `child_${childIndex}_existing_dla`;
+        if (q.id === dlaCare || q.id === dlaMobility) {
           if (answers[dlaKey] !== 'yes') return false;
         }
 

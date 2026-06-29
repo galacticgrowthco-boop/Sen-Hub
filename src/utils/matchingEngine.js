@@ -192,22 +192,33 @@ export const calculateEntitlements = (answers) => {
   if (hours_care === 'more_35') {
     const isUnderEarningsLimit = is_working === 'no' || weeklyEarningsNum <= ca.eligibility_rules.max_earnings_per_week_after_tax_ni_expenses;
     const hasSENCategory = children.some(c => c.care === 'yes' || c.existing_dla || hasExistingDLA);
-    
+
     if (isUnderEarningsLimit) {
-      monthlyCA = ca.rate * 52 / 12;
-      entitlements.push({
-        id: 'carers_allowance',
-        name: ca.name,
-        category: 'Benefits',
-        amount: `£${ca.rate.toFixed(2)}`,
-        period: ca.frequency,
-        status: hasExistingCA ? 'active' : (hasSENCategory ? 'likely' : 'potential'),
-        description: hasExistingCA
-          ? "You are already receiving Carer's Allowance."
-          : `Requires the child you care for to receive DLA (middle/high care) or PIP (daily living).`,
-        official_url: ca.official_url,
-        warning: ca.cliff_edge_warning
-      });
+      if (hasExistingUC_Carer && !hasExistingCA) {
+        // Show as informational, not as a new claim
+        entitlements.push({
+          id: 'carers_allowance_covered',
+          name: ca.name,
+          category: 'Benefits',
+          status: 'info',
+          description: "You already receive the Carer Element through Universal Credit. Claiming Carer's Allowance separately would reduce your UC by the same amount, so there is no net gain."
+        });
+      } else {
+        monthlyCA = ca.rate * 52 / 12;
+        entitlements.push({
+          id: 'carers_allowance',
+          name: ca.name,
+          category: 'Benefits',
+          amount: `£${ca.rate.toFixed(2)}`,
+          period: ca.frequency,
+          status: hasExistingCA ? 'active' : (hasSENCategory ? 'likely' : 'potential'),
+          description: hasExistingCA
+            ? "You are already receiving Carer's Allowance."
+            : `Requires the child you care for to receive DLA (middle/high care) or PIP (daily living).`,
+          official_url: ca.official_url,
+          warning: ca.cliff_edge_warning
+        });
+      }
     }
   }
 
