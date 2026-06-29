@@ -2,12 +2,14 @@ import { useLocation, Link } from 'react-router-dom';
 import { useState, useRef } from 'react';
 import { CheckCircle2, AlertCircle, RefreshCcw, Download, ExternalLink, TrendingUp, Coffee, Bell, ShieldCheck, Gift, Info, ChevronRight } from 'lucide-react';
 import { calculateEntitlements } from '../utils/matchingEngine';
+import StubCheckout from '../components/ui/StubCheckout';
 
 const Results = () => {
   const location = useLocation();
   const answers = location.state?.answers || {};
   const donationRef = useRef(null);
   const [showPremiumNotice, setShowPremiumNotice] = useState(false);
+  const [checkoutConfig, setCheckoutConfig] = useState({ isOpen: false, item: '', amount: '' });
 
   const { entitlements, comparison } = calculateEntitlements(answers);
   
@@ -19,9 +21,21 @@ const Results = () => {
 
   const isCurrentlyWorking = answers.is_working === 'yes';
 
-  const scrollToDonation = () => {
+  const openCheckout = (item, amount) => {
+    setCheckoutConfig({ isOpen: true, item, amount });
+  };
+
+  const handleDownloadClick = () => {
     setShowPremiumNotice(true);
-    donationRef.current?.scrollIntoView({ behavior: 'smooth' });
+    openCheckout('Premium PDF Report', '£4.99');
+  };
+
+  const handleDonateClick = () => {
+    openCheckout('Donation', '£3.00');
+  };
+
+  const handleSubscribeClick = () => {
+    openCheckout('Annual Subscription', '£19.00');
   };
 
   return (
@@ -186,7 +200,7 @@ const Results = () => {
               </p>
             </div>
             <button 
-              onClick={scrollToDonation}
+              onClick={handleDownloadClick}
               className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200"
             >
               <Download className="w-5 h-5" />
@@ -232,7 +246,10 @@ const Results = () => {
               <p className="text-slate-500 text-xs">
                 SEN Compass is free to use. If it helped you find support, consider a small donation.
               </p>
-              <button className="w-full bg-amber-50 text-amber-700 px-4 py-3 rounded-xl font-semibold hover:bg-amber-100 transition-colors border border-amber-200 flex items-center justify-center gap-2">
+              <button 
+                onClick={handleDonateClick}
+                className="w-full bg-amber-50 text-amber-700 px-4 py-3 rounded-xl font-semibold hover:bg-amber-100 transition-colors border border-amber-200 flex items-center justify-center gap-2"
+              >
                 Donate via Ko-fi
               </button>
             </div>
@@ -257,7 +274,10 @@ const Results = () => {
                   Get alerts whenever benefit rates change or new grants open.
                 </p>
                 <p className="text-indigo-700 font-bold">£19 / year</p>
-                <button className="w-full bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-indigo-700 transition-colors">
+                <button 
+                  onClick={handleSubscribeClick}
+                  className="w-full bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-indigo-700 transition-colors"
+                >
                   Subscribe Now
                 </button>
               </div>
@@ -265,6 +285,13 @@ const Results = () => {
           </section>
         </div>
       </div>
+
+      <StubCheckout 
+        isOpen={checkoutConfig.isOpen}
+        onClose={() => setCheckoutConfig({ ...checkoutConfig, isOpen: false })}
+        item={checkoutConfig.item}
+        amount={checkoutConfig.amount}
+      />
 
       <div className="flex justify-center gap-4 pt-12">
         <Link
