@@ -1,6 +1,6 @@
 import { useLocation, Link } from 'react-router-dom';
 import { useState, useRef } from 'react';
-import { CheckCircle2, AlertCircle, RefreshCcw, Download, ExternalLink, TrendingUp, Coffee, Bell, ShieldCheck, Gift, Info, ChevronRight } from 'lucide-react';
+import { CheckCircle2, AlertCircle, RefreshCcw, Download, ExternalLink, TrendingUp, Coffee, Bell, ShieldCheck, Gift, Info, ChevronRight, ArrowRight } from 'lucide-react';
 import { calculateEntitlements } from '../utils/matchingEngine';
 import StubCheckout from '../components/ui/StubCheckout';
 
@@ -98,7 +98,7 @@ const Results = () => {
                 </div>
               </div>
 
-              <div className="bg-white/5 p-6 rounded-2xl border border-white/10 text-center">
+              <div className="bg-white/5 p-6 rounded-2xl border border-white/10 text-center space-y-4">
                 <p className="text-indigo-100 text-lg">
                   {comparison.working.net > comparison.notWorking.net ? (
                     <>You are <span className="text-emerald-400 font-bold">£{(comparison.working.net - comparison.notWorking.net).toFixed(2)}</span> better off per month by working.</>
@@ -106,6 +106,16 @@ const Results = () => {
                     <>You are <span className="text-rose-400 font-bold">£{(comparison.notWorking.net - comparison.working.net).toFixed(2)}</span> worse off per month by working.</>
                   )}
                 </p>
+                <div className="flex justify-center">
+                  <Link 
+                    to="/better-off"
+                    state={{ answers }}
+                    className="inline-flex items-center gap-2 bg-indigo-500 text-white px-6 py-2 rounded-xl font-bold hover:bg-indigo-400 transition-colors text-sm"
+                  >
+                    Interactive Work Comparison
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
                 <p className="text-[10px] text-indigo-400 mt-3">
                   This calculation is based on 2026-27 benefit rates and tax rules. It includes help with childcare costs through Universal Credit where applicable.
                 </p>

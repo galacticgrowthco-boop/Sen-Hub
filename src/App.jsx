@@ -4,6 +4,7 @@ import Calculator from './pages/Calculator';
 import Results from './pages/Results';
 import GrantsDirectory from './pages/GrantsDirectory';
 import DLAGuide from './pages/DLAGuide';
+import BetterOffCalculator from './pages/BetterOffCalculator';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/results" element={<Results />} />
             <Route path="/dla-guide" element={<DLAGuide />} />
             <Route path="/grants" element={<GrantsDirectory />} />
+            <Route path="/better-off" element={<BetterOffCalculator />} />
           </Routes>
         </main>
 
