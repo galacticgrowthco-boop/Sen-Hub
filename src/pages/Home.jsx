@@ -43,8 +43,11 @@ const Home = () => {
           <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center">
             <HeartHandshake className="w-6 h-6" />
           </div>
-          <h3 className="text-lg font-bold">Empathetic Guidance</h3>
-          <p className="text-slate-500">Step-by-step application advice written by parents for parents.</p>
+          <h3 className="text-lg font-bold">Grants & Support</h3>
+          <p className="text-slate-500">Access our directory of charity grants for equipment, sensory items, and holidays.</p>
+          <Link to="/grants" className="text-indigo-600 font-bold text-sm hover:underline flex items-center gap-1">
+            View Directory <ChevronRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
